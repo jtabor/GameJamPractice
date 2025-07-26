@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEditor;
 
 public class Player2 : MonoBehaviour
 {
@@ -68,6 +69,7 @@ public class Player2 : MonoBehaviour
         for (int i = 0; i < tankObjects.Length; i++)
         {
             allTanks[i] = tankObjects[i].GetComponent<Tank>();
+            Debug.Log("TAG: " + tankObjects[i].tag);
         }
 
         System.Array.Sort(allTanks, (tank1, tank2) => tank1.vehicleId.CompareTo(tank2.vehicleId));
@@ -90,6 +92,9 @@ public class Player2 : MonoBehaviour
         Tank old_tank = controlledObject.GetComponent<Tank>();
         old_tank.deactivateTank();
         controlledObject = allTanks[nextIndex].gameObject;
+#if UNITY_EDITOR
+        UnityEditor.EditorGUIUtility.PingObject(allTanks[nextIndex]);
+#endif
         Tank new_tank = controlledObject.GetComponent<Tank>();
         new_tank.activateTank();
         

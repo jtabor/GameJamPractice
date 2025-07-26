@@ -53,7 +53,10 @@ public class Player1 : MonoBehaviour
                     turretRotation = -1f;
                 if (Keyboard.current.eKey.isPressed)
                     turretRotation = 1f;
-
+                if (Keyboard.current.spaceKey.isPressed)
+                {
+                    tank.shoot();
+                }
                 tank.HandleTurretRotation(turretRotation);
             }
         }
@@ -68,6 +71,7 @@ public class Player1 : MonoBehaviour
         for (int i = 0; i < tankObjects.Length; i++)
         {
             allTanks[i] = tankObjects[i].GetComponent<Tank>();
+            Debug.Log("TAG: " + tankObjects[i].tag);
         }
 
         System.Array.Sort(allTanks, (tank1, tank2) => tank1.vehicleId.CompareTo(tank2.vehicleId));
@@ -84,7 +88,7 @@ public class Player1 : MonoBehaviour
                 break;
             }
         }
-
+           
         // Switch to next tank (or first if none selected)
         int nextIndex = (currentIndex + 1) % allTanks.Length;
         Tank old_tank = controlledObject.GetComponent<Tank>();

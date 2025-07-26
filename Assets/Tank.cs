@@ -13,13 +13,18 @@ public class Tank : MonoBehaviour
     public float moveSpeed = 5f;
     public float rotationSpeed = 90f;
     public float turretRotationSpeed = 60f;
-
+    public float reloadTime = 1;
+    public Rigidbody projectile;
+    private float reloadingTimeLeft = 0;
+    public float projectileSpeed = 150.0f;
     private CinemachineCamera cam;
     private Transform turret;
-
+    public GameObject bulletSpawn;
+    public ParticleSystem shootParticle;
+    public CinemachineImpulseSource impulseSource;
+    public float recoilForce = 2.0f;
     void Awake()
     {
-
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,10 +74,26 @@ public class Tank : MonoBehaviour
         });
 
     }
+    public void shoot()
+    {
+        if (reloadingTimeLeft <= 0)
+        {
+            Rigidbody clone;
+            clone = Instantiate(projectile, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
+
+            // Give the cloned object an initial velocity along the current
+            // object's Z axis
+            clone.linearVelocity = bulletSpawn.transform.TransformDirection(UnityEngine.Vector3.right * projectileSpeed);
+            shootParticle.Play();
+            reloadingTimeLeft = reloadTime;
+
+            impulseSource.GenerateImpulse(recoilForce);
+        }
+    }
     // Update is called once per frame
         void Update()
     {
-
+        reloadingTimeLeft -= Time.deltaTime;
     }
     public void deactivateTank()
     {
