@@ -9,7 +9,7 @@ public class Player1 : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       
+               
     }
 
     // Update is called once per frame
@@ -18,7 +18,8 @@ public class Player1 : MonoBehaviour
         // Handle tab key for switching tanks
         if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
-            SwitchToNextTank();
+           	SwitchToNextTank(); 
+		SwitchToNextTank();
         }
 
         // Handle movement input if we have a controlled object
@@ -88,7 +89,6 @@ public class Player1 : MonoBehaviour
                 break;
             }
         }
-           
         // Switch to next tank (or first if none selected)
         int nextIndex = (currentIndex + 1) % allTanks.Length;
         Tank old_tank = controlledObject.GetComponent<Tank>();

@@ -54,7 +54,7 @@ public class Tank : MonoBehaviour
 
     public void HandleTurretRotation(float rotation)
     {
-        if (turret != null)
+        if (taurret != null)
         {
             turret.Rotate(0, rotation * Time.deltaTime * turretRotationSpeed, 0, Space.Self);
         }
@@ -84,7 +84,7 @@ public class Tank : MonoBehaviour
             // Give the cloned object an initial velocity along the current
             // object's Z axis
             clone.linearVelocity = bulletSpawn.transform.TransformDirection(UnityEngine.Vector3.right * projectileSpeed);
-            shootParticle.Play();
+            shootParticle.Play(true);
             reloadingTimeLeft = reloadTime;
 
             impulseSource.GenerateImpulse(recoilForce);
